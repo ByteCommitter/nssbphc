@@ -1,0 +1,1 @@
+//make sure admin is registered and has special capabilities

@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 
 class EventPage extends StatefulWidget {
 
@@ -20,15 +22,28 @@ class _EventPageState extends State<EventPage> {
 
   return Scaffold(
     appBar: AppBar(
-      title: Text('Scan Result', style: TextStyle(color: Colors.deepPurple,fontWeight: FontWeight.bold),),
+      title: Text('Events', style: TextStyle(color: Colors.deepPurple,fontWeight: FontWeight.bold),),
     ),
-    body: Center(
+    body: const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           
         ],
       ),
+    ),
+
+    floatingActionButton: 
+    Visibility(visible: true,
+      child: 
+        FloatingActionButton.extended(
+          onPressed: () {
+            Get.to(() => EventPage());
+          },
+          label: Text('Add Event'),
+          icon: Icon(Icons.add_outlined),
+          backgroundColor: Colors.deepPurple,
+        ),
     ),
   );
   }
