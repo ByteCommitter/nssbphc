@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1070610491008",
+    "project_id": "nss-bphc-68276",
+    "storage_bucket": "nss-bphc-68276.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1070610491008:android:c11175d6027601beeb6865",
+        "android_client_info": {
+          "package_name": "com.example.nssbphc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxPGF9eM7zBSAtGn3Hwi99qqQGBZXgJ-s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

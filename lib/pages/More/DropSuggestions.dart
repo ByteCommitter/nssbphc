@@ -69,11 +69,11 @@ class _DropSuggestionsScreenState
                     child: Container(
                       width: 100,
                       decoration: BoxDecoration(
-                          color: AppTheme.secondaryColor,
+                          color: Colors.deepPurple[200],
                           borderRadius: BorderRadius.all(Radius.circular(15))),
-                      child: Center(
+                      child: const Center(
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
+                          padding: EdgeInsets.symmetric(
                             horizontal: 10.0,
                             vertical: 20.0,
                           ),

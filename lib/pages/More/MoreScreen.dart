@@ -4,6 +4,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:nssbphc/config/styling.dart';
 import 'package:nssbphc/pages/More/AboutUs.dart';
 import 'package:nssbphc/pages/More/ContactUs.dart';
+import 'package:nssbphc/pages/More/DropSuggestions.dart';
 //import 'package:provider/provider.dart';
 
 class MoreInfoScreen extends StatefulWidget {
@@ -105,7 +106,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                 const SizedBox(height: 20.0),
                 InkWell(
                   onTap: () {
-                    //Get.to(()=>);
+                    Get.to(()=>DropSuggestionsScreen());
                   },
                   child: Container(
                     child:const Padding(
