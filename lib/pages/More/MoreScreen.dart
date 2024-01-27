@@ -3,6 +3,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:nssbphc/config/styling.dart';
 import 'package:nssbphc/pages/More/AboutUs.dart';
+import 'package:nssbphc/pages/More/ContactUs.dart';
 //import 'package:provider/provider.dart';
 
 class MoreInfoScreen extends StatefulWidget {
@@ -78,7 +79,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                 const SizedBox(height: 20.0),
                 InkWell(
                   onTap: () {
-                    //Get.to(() => MerchPage());//contactus
+                    Get.to(() => ContactPage());
                   },
                   child: Container(
                     child:const Padding(
@@ -107,8 +108,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     //Get.to(()=>);
                   },
                   child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                    child:const Padding(
+                      padding:  EdgeInsets.all(20.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -130,7 +131,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                 const SizedBox(height: 20.0),
                 ElevatedButton(onPressed: (){
 
-                }, child: Text("Log Out")),
+                }, child:const Text("Log Out")),
               ],
             ),
           ),
