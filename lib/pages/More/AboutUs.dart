@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nssbphc/config/utilityFunctions.dart';
 
-class MorePage extends StatefulWidget {
-  const MorePage({ Key? key }) : super(key: key);
+class AboutUsPage extends StatefulWidget {
+  const AboutUsPage({ Key? key }) : super(key: key);
 
   @override
-  _MorePageState createState() => _MorePageState();
+  _AboutUsPageState createState() => _AboutUsPageState();
 }
 
 
 
-class _MorePageState extends State<MorePage> {
+class _AboutUsPageState extends State<AboutUsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nssbphc/pages/Dashboard/DashboardPage.dart';
 import 'package:nssbphc/pages/Events/EventsScreen.dart';
 import 'package:nssbphc/pages/Merch/merchandiseScreen.dart';
-import 'package:nssbphc/pages/More/MorePage.dart';
+import 'package:nssbphc/pages/More/MoreScreen.dart';
 import 'package:nssbphc/pages/Profile/ProfilePage.dart';
 
 class BaseScreen extends StatefulWidget{
@@ -57,7 +57,7 @@ class _BaseScreenState extends State<BaseScreen> {
           
             ProfilePage(),
 
-            MorePage()
+            MoreInfoScreen()
 
         ],
       ),
