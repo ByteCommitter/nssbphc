@@ -65,7 +65,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
                 ),
               ),
               const Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.0),
                 child: Text(
                   'It has now around 150 volunteers working for the social uplift of the down-trodden masses of our nation. We are an organisation through which students get an opportunity to understand the community they work in and their relationship with it.',
                   style: TextStyle(
@@ -77,7 +77,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
               ),
               const SizedBox(height: 20.0),
               const Padding(
-                padding: const EdgeInsets.only(top: 15.0),
+                padding: EdgeInsets.only(top: 15.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [

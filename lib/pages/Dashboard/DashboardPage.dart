@@ -20,7 +20,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   return Scaffold(
     appBar: AppBar(
-      title: Text('Scan Result', style: TextStyle(color: Colors.deepPurple,fontWeight: FontWeight.bold),),
+      title: Text('DashBoard', style: TextStyle(color: Colors.deepPurple,fontWeight: FontWeight.bold),),
     ),
     body: Center(
       child: Column(

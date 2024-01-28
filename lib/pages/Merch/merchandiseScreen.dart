@@ -20,7 +20,7 @@ class _MerchPageState extends State<MerchPage> {
 
   return Scaffold(
     appBar: AppBar(
-      title: Text('Scan Result', style: TextStyle(color: Colors.deepPurple,fontWeight: FontWeight.bold),),
+      title: Text('Merchandise', style: TextStyle(color: Colors.deepPurple,fontWeight: FontWeight.bold),),
     ),
     body: Center(
       child: Column(
