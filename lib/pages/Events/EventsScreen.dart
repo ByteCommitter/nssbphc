@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:nssbphc/pages/Events/addEventPage.dart';
 
 class EventPage extends StatefulWidget {
 
@@ -38,7 +39,7 @@ class _EventPageState extends State<EventPage> {
       child: 
         FloatingActionButton.extended(
           onPressed: () {
-            Get.to(() => EventPage());
+            Get.to(() => AddEventPage());
           },
           label: Text('Add Event'),
           icon: Icon(Icons.add_outlined),

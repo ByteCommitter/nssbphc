@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:http/http.dart';
 import 'package:nssbphc/config/styling.dart';
+import 'package:nssbphc/pages/More/SuggestionsLoaded.dart';
+import 'package:firebase_core/firebase_core.dart';
 //import 'package:nssapp/models/loginManager.dart';
 
 class DropSuggestionsScreen extends StatefulWidget {
@@ -51,12 +54,12 @@ class _DropSuggestionsScreenState
                 ),
                 Container(
                   height: maxLines * 24,
-                  margin: EdgeInsets.all(12),
+                  margin:const EdgeInsets.all(12),
                   child: TextField(
                     maxLines: maxLines,
                     controller: suggestionController,
-                    style: TextStyle(color: Colors.black),
-                    decoration: InputDecoration(
+                    style: const TextStyle(color: Colors.black),
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Suggestion',
                     ),
@@ -94,16 +97,20 @@ class _DropSuggestionsScreenState
     );
   }
 
-  void _onSubmit() {
-    //final name = context.read<LoginManager>().user.name;
-    Get.to(() => DropSuggestionsScreen());
+ 
 
-    /*  
-    post(Uri.parse("$BASE_URL/suggestions"), body: {
-      "title": titleController.text,
-      "content": suggestionController.text,
-      "username": name,
-    });*/
+  void _onSubmit() async {
+    //final name = context.read<LoginManager>().user.name;
+    //push it to the firebase collection - Suggestions which has the fields dec and title
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Add a new document to the "Suggestions" collection
+    await firestore.collection('Suggestions').add({
+      'title': titleController.text,
+      'desc': suggestionController.text,
+    });
+    Get.to(() => SuccessScreen());
+
     titleController.text = "";
     suggestionController.text = "";
   }
