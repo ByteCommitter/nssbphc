@@ -2,11 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:http/http.dart';
-import 'package:nssbphc/config/styling.dart';
 import 'package:nssbphc/pages/More/SuggestionsLoaded.dart';
-import 'package:firebase_core/firebase_core.dart';
-//import 'package:nssapp/models/loginManager.dart';
 
 class DropSuggestionsScreen extends StatefulWidget {
   const DropSuggestionsScreen({Key? key}) : super(key: key);
@@ -15,14 +11,15 @@ class DropSuggestionsScreen extends StatefulWidget {
   _DropSuggestionsScreenState createState() =>_DropSuggestionsScreenState();
 }
 
-class _DropSuggestionsScreenState
-    extends State<DropSuggestionsScreen> {
+class _DropSuggestionsScreenState extends State<DropSuggestionsScreen> {
   final titleController = TextEditingController();
   final suggestionController = TextEditingController();
   final maxLines = 10;
+  Future<void>? submitFuture;
   @override
   Widget build(BuildContext context) {
-    //final isAdmin = Provider.of<LoginManager>(context, listen: false).isAdmin;
+    bool isAdmin = false; //changes according to the login
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -31,77 +28,128 @@ class _DropSuggestionsScreenState
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.black),
         title: Text(
-          //isAdmin ?
-           "View Suggestions",
-           // : 'Drop Suggestions',
+          "Drop Suggestions",
           style: TextStyle(color: Colors.black),
         ),
       ),
-      body: //isAdmin
-          //? SuggestionsList():
-           ListView(
-              children: [
-                Container(
-                  margin: EdgeInsets.all(12),
-                  child: TextField(
-                    controller: titleController,
-                    style: TextStyle(color: Colors.black),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Title',
-                    ),
-                  ),
-                ),
-                Container(
-                  height: maxLines * 24,
-                  margin:const EdgeInsets.all(12),
-                  child: TextField(
-                    maxLines: maxLines,
-                    controller: suggestionController,
-                    style: const TextStyle(color: Colors.black),
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Suggestion',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(100.0),
-                  child: InkWell(
-                    onTap: _onSubmit,
-                    child: Container(
-                      width: 100,
-                      decoration: BoxDecoration(
-                          color: Colors.deepPurple[200],
-                          borderRadius: BorderRadius.all(Radius.circular(15))),
-                      child: const Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 10.0,
-                            vertical: 20.0,
-                          ),
-                          child: Text(
-                            "SUBMIT",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+      body: isAdmin ? buildSuggestionsList() : buildSuggestionForm(),
     );
   }
 
- 
+  Widget buildSuggestionsList() {
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance.collection('Suggestions').snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
 
-  void _onSubmit() async {
-    //final name = context.read<LoginManager>().user.name;
-    //push it to the firebase collection - Suggestions which has the fields dec and title
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+
+        if (snapshot.data == null) {
+          return ListView();
+        }
+
+        return ListView(
+          children: snapshot.data!.docs.map((DocumentSnapshot document) {
+            Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                elevation: 5,
+                child: ListTile(
+                  title: Text('Title: ${data['title']}',style: TextStyle(fontSize: 18),),
+                  subtitle: Text('Suggestion: ${data['desc']}'),
+                ),
+              ),
+            );
+          }).toList(),
+        );
+      },
+    );
+  }
+
+  Widget buildSuggestionForm() {
+    return ListView(
+      children: [
+        Container(
+          margin: EdgeInsets.all(12),
+          child: TextField(
+            controller: titleController,
+            style: TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Title',
+            ),
+          ),
+        ),
+        Container(
+          height: maxLines * 24,
+          margin:const EdgeInsets.all(12),
+          child: TextField(
+            maxLines: maxLines,
+            controller: suggestionController,
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Suggestion',
+            ),
+          ),
+        ),
+        
+        Padding(
+          padding: const EdgeInsets.all(100.0),
+          child: InkWell(
+            onTap: _onSubmit,
+            child: Container(
+              width: 100,
+              decoration: BoxDecoration(
+                  color: Colors.deepPurple[200],
+                  borderRadius: BorderRadius.all(Radius.circular(15))),
+              child: const Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.0,
+                    vertical: 20.0,
+                  ),
+                  child: Text(
+                    "SUBMIT",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+ Future<void> _onSubmit() async {
+    showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: Container(
+                      width: 20,
+                      height: 260,
+                      child:CircularProgressIndicator(color: Colors.deepPurple[200]),
+                      ),
+                    contentPadding: EdgeInsets.all(0),
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                  );
+                },
+      );
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     // Add a new document to the "Suggestions" collection
