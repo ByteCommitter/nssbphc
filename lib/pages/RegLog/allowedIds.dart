@@ -1,40 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'allIds.dart'; // Import the file containing the IDs
 
-Future<void> addAllowedId(String id) async {
-  await FirebaseFirestore.instance.collection('allowed_ids').doc(id).set({});
-}
-
-Future<void> uploadAllowedIds(List<String> ids) async {
-  for (String id in ids) {
-    await addAllowedId(id);
-  }
-}
-
-List<String> generateIds() {
-  List<String> ids = [];
-
-  List<String> years = ['18', '19', '20', '21', '22', '23'];
-  List<String> codes = ['AA', 'A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8'];
-  List<String> types = ['PS', 'TS'];
-
-  for (String year in years) {
-    for (String code in codes) {
-      for (String type in types) {
-        for (int i = 1; i <= 3000; i++) {
-          String number = i.toString().padLeft(4, '0'); // Pad with zeros to get 4 digits
-          String id = '20' + year + code + type + number;
-          ids.add(id);
-        }
-      }
-    }
-  }
-
-  return ids;
-}
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class UploadIds extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -45,8 +13,7 @@ class MyApp extends StatelessWidget {
         body: Center(
           child: ElevatedButton(
             onPressed: () async {
-              List<String> ids = generateIds();
-              await uploadAllowedIds(ids);
+              await uploadAllowedIds(Allids); // Use the idsList from ids.dart
             },
             child: Text('Upload IDs'),
           ),
@@ -54,5 +21,27 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
-}
 
+  // Define the uploadAllowedIds method
+  Future<void> uploadAllowedIds(List<String> ids) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    WriteBatch batch = firestore.batch();
+
+    int counter = 0;
+    for (String id in ids) {
+      DocumentReference docRef = firestore.collection('allowed_ids').doc(id);
+      batch.set(docRef, <String, dynamic>{});
+
+      counter++;
+      if (counter == 500) {
+        await batch.commit();
+        batch = firestore.batch();
+        counter = 0;
+      }
+    }
+
+    if (counter > 0) {
+      await batch.commit();
+    }
+  }
+}
