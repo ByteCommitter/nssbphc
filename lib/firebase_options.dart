@@ -50,19 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBxPGF9eM7zBSAtGn3Hwi99qqQGBZXgJ-s',
-    appId: '1:1070610491008:android:c11175d6027601beeb6865',
+    apiKey: 'nah you wont get it',
+    appId: 'nah you wont get it',
     messagingSenderId: '1070610491008',
     projectId: 'nss-bphc-68276',
     storageBucket: 'nss-bphc-68276.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBSJYJOK4IJgCcIbrcuCM51ZqSlgFnWQFE',
-    appId: '1:1070610491008:ios:33a8e7c731681b49eb6865',
+    apiKey: 'go somewhere else',
+    appId: 'find something better to do',
     messagingSenderId: '1070610491008',
     projectId: 'nss-bphc-68276',
     storageBucket: 'nss-bphc-68276.appspot.com',
     iosBundleId: 'com.example.nssbphc',
   );
+  
 }
